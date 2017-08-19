@@ -25,7 +25,7 @@
         };
         xhr.send();
     }
-
+/*
     ajaxFun('./data/product.json', (data) => {
         console.log(data[0])
         ajaxFun('./data/user.json', (data) => {
@@ -35,6 +35,65 @@
             })
         })
     })
+*/
+/*
+    function ajaxPromise(url) {
+        return new Promise((resolve, reject) => {
+            ajaxFun(url,(response) => {
+                resolve(response)
+            })
+        })
+    }
+    ajaxPromise('./data/product.json').then((data) => {
+        console.log(data[0])
+        return ajaxPromise('./data/user.json')
+    }).then((data) => {
+        console.log(data[0])
+        return ajaxPromise('./data/comments.json')
+    }).then((data) => {
+        console.log(data[0])
+    })
+
+*/
+
+/*
+function yajax(url) {
+    ajaxFun(url, (response) => {
+        iterator.next(response)
+    })
+}
+function *main() {
+    let data1 = yield yajax('./data/product.json')
+    let data2 = yield yajax('./data/user.json')
+    let data3 = yield yajax('./data/comments.json')
+    console.log(data1[0])
+    console.log(data2[0])
+    console.log(data3[0])
+}
+let iterator = main()
+iterator.next()
+*/
+
+
+function ajaxAwait(url) {
+    return new Promise(function(resolve, reject) {
+        ajaxFun(url, (response) => {
+            resolve(response);
+        });
+    });
+}
+
+(async () => {
+    let data1 = await ajaxAwait('./data/product.json');
+    let data2 = await ajaxAwait('./data/user.json');
+    let data3 = await ajaxAwait('./data/comments.json');
+    console.log(data1[0]);
+    console.log(data2[0]);
+    console.log(data3[0]);
+})();
+
+
+
 
     /*
     var data = fetch('./data/product.json', {
