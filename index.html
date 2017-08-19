@@ -1,0 +1,55 @@
+<html>
+
+<head>
+    <meta charset="utf8" />
+    <title>测试页</title>
+</head>
+
+<body>
+    <p>这是主要内容</p>
+</body>
+
+<script>
+    var ajaxFun = function(url, callback, onerror) {
+        var xhr, results;
+        xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.onload = function (e) {
+            if (this.status === 200) {
+                results = JSON.parse(this.responseText);
+                callback(results);
+            }
+        };
+        xhr.onerror = function (e) {
+            onerror(e);
+        };
+        xhr.send();
+    }
+
+    ajaxFun('./data/product.json', (data) => {
+        console.log(data[0])
+        ajaxFun('./data/user.json', (data) => {
+            console.log(data[0])
+            ajaxFun('./data/comments.json', (data) => {
+                console.log(data[0])
+            })
+        })
+    })
+
+    /*
+    var data = fetch('./data/product.json', {
+        method: 'get'
+    }).then((res) => {
+        if (res.ok) {
+            return res.json()
+        } else {
+            console.log('request url error')
+        }
+    }).catch((err) => {
+        console.log(err)
+    })
+    console.log(data) */
+
+</script>
+
+</html>
